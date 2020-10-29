@@ -44,11 +44,11 @@
                         </li>
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('menu') }}">{{ __('Névjegy') }}</a>
+                                <a class="nav-link" href="{{ route('about') }}">{{ __('Névjegy') }}</a>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('menu') }}">{{ __('Kosár') }}</a>
+                                <a class="nav-link" href="{{ route('cart') }}">{{ __('Kosár') }}</a>
                             </li>
                         @endguest
                     </ul>

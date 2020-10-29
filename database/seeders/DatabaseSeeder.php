@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
+        User::factory(1)->create();
         Item::factory(6)->create();
         Category::factory(8)->create();
     }

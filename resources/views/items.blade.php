@@ -21,7 +21,29 @@
                         <div class="card-body">
                         <h5 class="card-title">{{ $item->name }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Ár: {{ $item->price }} €</h6>
-                        <p class="card-text">Kattints részletekért.</p>
+                        <form action="{{ route('add.to.cart', ['itemId' => $item->id]) }}" method="POST" class="text-center">
+                        @csrf
+
+                        @error('quantity')
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('quantity') }}</strong>
+                            </div>
+                        @enderror
+                            <fieldset @guest disabled @endguest>
+                                <label for="quantity">Mennyiség</label>
+
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control" min="1" max="10"  value="1" width="10"
+                                        name='quantity'>
+                                    </div>
+                                </div>
+
+                                <div class="text-center my-3">
+                                    <button type="submit" class="btn btn-primary">Kosárba</button>
+                                </div>
+                            <fieldset>
+                        </form>
                         </div>
                     </div>
                 </div>

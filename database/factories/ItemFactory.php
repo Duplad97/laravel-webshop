@@ -27,7 +27,7 @@ class ItemFactory extends Factory
             //
             'name' => $this->faker->words(2, true),
             'description' => $this->faker->paragraph(5, true),
-            'price' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 1000),
+            'price' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 100),
             'image_url' => ''
         ];
     }
