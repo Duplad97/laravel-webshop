@@ -47,10 +47,10 @@
 
         <div class="d-flex justify-content-center">
 
-        <form class="w-50" action="" method="POST">
+        <form class="w-50" action="{{ route('send.order') }}" method="POST">
         @csrf
                 <div class="form-group">
-                    <label for="address">Szállítási cím</label>
+                    <label for="address">Szállítási cím</label><label style="color: red !important;">*</label>
                     <input type="text" class="form-control" id="address" name="address">
                 </div>
 
@@ -61,15 +61,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Fizetési mód</label>
+                    <label>Fizetési mód</label><label style="color: red !important;">*</label>
                     <br>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="cash" name="payment_method" value="cash" checked>
+                        <input type="radio" class="custom-control-input" id="cash" name="payment_method" value="CASH" checked>
                         <label class="custom-control-label" for="cash">Készpénz</label>
                     </div>
 
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="card" name="payment_method" value="card">
+                        <input type="radio" class="custom-control-input" id="card" name="payment_method" value="CARD">
                         <label class="custom-control-label" for="card">Kártya</label>
                     </div>
                 </div>

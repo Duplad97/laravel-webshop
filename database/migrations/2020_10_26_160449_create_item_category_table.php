@@ -13,7 +13,7 @@ class CreateItemCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_category', function (Blueprint $table) {
+        Schema::create('category_item', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('category_id');

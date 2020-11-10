@@ -4,25 +4,15 @@
 
 @section('content')
     <div class="container">
-        <h3>Kategóriák</h3>
-
-        <div class="row">
-            @foreach ($categories as $category)
-                <span class="badge badge-dark m-2"><a style="color: white !important;" href="{{ route('category', ['id' => $category->id]) }}">{{ $category->name }}</a></span>
-            @endforeach
-        </div>
-
-        <hr>
-
-        <h3>Termékek</h3>
-
-        <div class="row">
-            @foreach ($categories as $category)
-            <div class="row mt-2">
-            <h4 class="w-100">{{ $category->name }}</h4>
-            <br>
-                @forelse ($category->items as $item)
-                    <div class="col-12 col-lg-4 mb-2">
+        @if (!isset($category))
+            <div class="alert alert-danger" role="alert">
+                Ez a kategória nem létezik
+            </div>
+        @else
+            <h1 class="text-center">{{ $category->name }}</h1>
+            <div class="row">
+                @forelse ($items as $item)
+                <div class="col-12 col-lg-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
@@ -56,10 +46,8 @@
                 @empty
                     <p>Még nincsenek termékek ebben a kategóriában</p>
                 @endforelse
-            @endforeach
             </div>
-        </div>
-
+        @endif
     </div>
 
 @endsection

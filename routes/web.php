@@ -26,8 +26,10 @@ Route::get('/', [MainController::class, 'index'])->name('main');
 Route::get('/menu', [ItemController::class, 'showAll'])->name('menu');
 Route::get('/about', [AboutController::class, 'show'])->name('about');
 Route::get('/cart', [CartController::class, 'show'])->name('cart')->middleware('auth');
+Route::get('/menu/category/{id}', [ItemController::class, 'show'])->name('category');
 
 Route::post('/cart/add/{itemId}',[CartController::class, 'addToCart'])->name('add.to.cart')->middleware('auth');
+Route::post('/cart/send', [CartController::class, 'sendOrder'])->name('send.order')->middleware('auth');
 
 Route::delete('/cart/remove/{itemId}', [CartController::class, 'removeFromCart'])->name('remove.from.cart')->middleware('auth');
 

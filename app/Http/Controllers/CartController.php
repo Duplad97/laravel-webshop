@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\AddToCartFormRequest;
+use App\Http\Requests\SendOrderFormRequest;
 use App\Models\Order;
 use App\Models\OrderedItem;
 use App\Models\Item;
@@ -46,9 +47,9 @@ class CartController extends Controller
         foreach ($orders as $order) {
             $orderedItems = $order->orderedItems;
 
-            if ($orderedItems->find($itemId)) {
+            if (count($orderedItems->where('item_id', $itemId)) !== 0) {
                 $found = true;
-                $foundItem = $orderedItems->where('item_id' ,$itemId);
+                $foundItem = $orderedItems->where('item_id' ,$itemId)[0];
             }
         }
 
@@ -98,5 +99,26 @@ class CartController extends Controller
         }
 
         return redirect()->route('cart');
+    }
+
+    public function sendOrder(SendOrderFormRequest $request) {
+
+        $user = Auth::user();
+
+        $userCart = $user->orders->where('status', 'CART');
+        $orderData = $request->all();
+
+        foreach ($userCart as $order) {
+            $order->address = $orderData['address'];
+
+            if ($orderData['comment']) $order->comment = $orderData['comment'];
+
+            $order->payment_method = $orderData['payment_method'];
+            $order->status = 'RECEIVED';
+
+            $order->save();
+
+            echo "order received";
+        }
     }
 }

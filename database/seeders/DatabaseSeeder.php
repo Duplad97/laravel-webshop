@@ -40,6 +40,11 @@ class DatabaseSeeder extends Seeder
 
         User::factory(1)->create();
         Item::factory(6)->create();
-        Category::factory(8)->create();
+        Category::factory(6)->create();
+
+        Item::all()->each(function ($item) {
+            $ids = Category::all()->random(rand(1, Category::count()))->pluck('id')->toArray();
+            $item->categories()->attach($ids);
+        });
     }
 }
