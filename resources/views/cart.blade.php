@@ -47,12 +47,17 @@
 
         <div class="d-flex justify-content-center">
 
-        <form class="w-50" action="{{ route('send.order') }}" method="POST">
+        <form class="w-50" action="{{ route('send.order') }}" method="POST" enctype="multipart/form-data">
         @csrf
                 <div class="form-group">
                     <label for="address">Szállítási cím</label><label style="color: red !important;">*</label>
                     <input type="text" class="form-control" id="address" name="address">
                 </div>
+                @error('address')
+                    <div class="invalid-feedback">
+                        <strong>{{ $errors->first('address') }}</strong>
+                    </div>
+                @enderror
 
                 <div class="form-group">
                     <label for="comment">Megjegyzés</label>
@@ -73,6 +78,12 @@
                         <label class="custom-control-label" for="card">Kártya</label>
                     </div>
                 </div>
+
+                @if ($errors->has('payment_method'))
+                    <div class="invalid-feedback">
+                        <strong>{{ $errors->first('payment_method') }}</strong>
+                    </div>
+                @endif
 
                 <div class="text-center my-3">
                     <button type="submit" class="btn btn-primary">Rendelés leadása</button>

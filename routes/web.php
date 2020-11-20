@@ -6,6 +6,8 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,8 @@ Route::get('/menu', [ItemController::class, 'showAll'])->name('menu');
 Route::get('/about', [AboutController::class, 'show'])->name('about');
 Route::get('/cart', [CartController::class, 'show'])->name('cart')->middleware('auth');
 Route::get('/menu/category/{id}', [ItemController::class, 'show'])->name('category');
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile')->middleware('auth');
+Route::get('/orders', [OrderController::class, 'show'])->name('orders')->middleware('auth');
 
 Route::post('/cart/add/{itemId}',[CartController::class, 'addToCart'])->name('add.to.cart')->middleware('auth');
 Route::post('/cart/send', [CartController::class, 'sendOrder'])->name('send.order')->middleware('auth');

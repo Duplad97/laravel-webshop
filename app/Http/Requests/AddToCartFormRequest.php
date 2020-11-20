@@ -34,7 +34,7 @@ class AddToCartFormRequest extends FormRequest
     // A szabályokat angolul megtalálod itt: resources/lang/en/validation.php
     public function messages() {
         return [
-            'required' => 'A mennyiség megadása kötelező.',
+            'required' => 'A mennyiség megadása kötelező',
             //'title.min' => 'A cím legalább :min karakter legyen',
         ];
     }

@@ -11,7 +11,7 @@
         @if (View::hasSection('title'))
             @yield('title')
         @else
-            Blog
+            Laravel - Webshop
         @endif
     </title>
 
@@ -72,15 +72,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href=""
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
                                         {{ __('Profil') }}
                                     </a>
 
-                                    <a class="dropdown-item" href=""
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('orders') }}">
                                         {{ __('Rendelések') }}
                                     </a>
 

@@ -16,7 +16,7 @@ class CartController extends Controller
 
         $user = Auth::user();
 
-        $orders = $user->orders;
+        $orders = $user->orders->where('status', 'CART');
 
         $items = [];
 
@@ -39,7 +39,7 @@ class CartController extends Controller
 
         $user = Auth::user();
 
-        $orders = $user->orders;
+        $orders = $user->orders->where('status', 'CART');
 
         $found = false;
         $foundItem = null;
@@ -56,19 +56,33 @@ class CartController extends Controller
         echo $found;
         echo $foundItem;
 
-        if ($found == false) {
-            $data['user_id'] = Auth::id();
-            $data['address'] = '';
-            $data['status'] = 'CART';
-            $data['payment_method'] = 'CASH';
+        if ($found === false) {
+            if (count($orders) === 0) {
+                $data['user_id'] = Auth::id();
+                $data['address'] = '';
+                $data['status'] = 'CART';
+                $data['payment_method'] = 'CASH';
 
-            $order = Order::create($data);
+                $order = Order::create($data);
 
-            $itemData = $request->all();
-            $itemData['order_id'] = $order['id'];
-            $itemData['item_id'] = $itemId;
+                $itemData = $request->all();
+                $itemData['order_id'] = $order['id'];
+                $itemData['item_id'] = $itemId;
 
-            OrderedItem::create($itemData);
+                OrderedItem::create($itemData);
+            }
+            else {
+                $orderedItems = $orders->first()->orderedItems;
+                $itemData = $request->all();
+                $itemData['order_id'] = $orders->first()['id'];
+                $itemData['item_id'] = $itemId;
+
+                $orderedItem = OrderedItem::create($itemData);
+
+                $orderedItems->push($orderedItem);
+
+            }
+
         } else {
             $itemData = $request->all();
             $foundItem->quantity += $itemData['quantity'];
@@ -108,17 +122,19 @@ class CartController extends Controller
         $userCart = $user->orders->where('status', 'CART');
         $orderData = $request->all();
 
-        foreach ($userCart as $order) {
-            $order->address = $orderData['address'];
+        if (count($userCart) > 0) {
+            foreach ($userCart as $order) {
+                $order->address = $orderData['address'];
 
-            if ($orderData['comment']) $order->comment = $orderData['comment'];
+                if ($orderData['comment']) $order->comment = $orderData['comment'];
 
-            $order->payment_method = $orderData['payment_method'];
-            $order->status = 'RECEIVED';
+                $order->payment_method = $orderData['payment_method'];
+                $order->status = 'RECEIVED';
 
-            $order->save();
-
-            echo "order received";
+                $order->save();
+            }
         }
+
+        return redirect()->route('main')->with('order_received', true);
     }
 }

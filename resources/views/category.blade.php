@@ -9,7 +9,7 @@
                 Ez a kategória nem létezik
             </div>
         @else
-            <h1 class="text-center">{{ $category->name }}</h1>
+            <h1 class="text-center text-uppercase">{{ $category->name }}</h1>
             <div class="row">
                 @forelse ($items as $item)
                 <div class="col-12 col-lg-4 mb-2">

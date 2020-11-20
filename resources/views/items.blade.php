@@ -18,8 +18,8 @@
 
         <div class="row">
             @foreach ($categories as $category)
-            <div class="row mt-2">
-            <h4 class="w-100">{{ $category->name }}</h4>
+            <div class="row mt-2 w-100">
+            <h4 class="w-100 text-center font-weight-bold text-uppercase">{{ $category->name }}</h4>
             <br>
                 @forelse ($category->items as $item)
                     <div class="col-12 col-lg-4 mb-2">
@@ -29,12 +29,6 @@
                             <h6 class="card-subtitle mb-2 text-muted">Ár: {{ $item->price }} €</h6>
                             <form action="{{ route('add.to.cart', ['itemId' => $item->id]) }}" method="POST" class="text-center">
                             @csrf
-
-                            @error('quantity')
-                                <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('quantity') }}</strong>
-                                </div>
-                            @enderror
                                 <fieldset @guest disabled @endguest>
                                     <label for="quantity">Mennyiség</label>
 
@@ -44,6 +38,12 @@
                                             name='quantity'>
                                         </div>
                                     </div>
+
+                                    @error('quantity')
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('quantity') }}</strong>
+                                </div>
+                            @enderror
 
                                     <div class="text-center my-3">
                                         <button type="submit" class="btn btn-primary">Kosárba</button>
