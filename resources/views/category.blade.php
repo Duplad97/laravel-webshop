@@ -14,8 +14,13 @@
                 @forelse ($items as $item)
                 <div class="col-12 col-lg-4 mb-2">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body text-center">
                             <h5 class="card-title">{{ $item->name }}</h5>
+                            @if ($item->image_url === null || $item->image_url === '' || $item->image_url === '0')
+                                <img class="w-75 mb-3 img-thumbnail" src="{{ Storage::url('images/placeholder.png') }}">
+                            @else
+                                <img class="w-75 mb-2 img-thumbnail" src="{{ Storage::url('images/' . $item->image_url) }}">
+                            @endif
                             <h6 class="card-subtitle mb-2 text-muted">Ár: {{ $item->price }} €</h6>
                             <form action="{{ route('add.to.cart', ['itemId' => $item->id]) }}" method="POST" class="text-center">
                             @csrf

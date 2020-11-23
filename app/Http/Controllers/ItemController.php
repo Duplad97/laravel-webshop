@@ -13,7 +13,8 @@ class ItemController extends Controller
     public function showAll()
     {
         $categories = Category::all();
-        return view('items', compact('categories'));
+        $user = Auth::user();
+        return view('items', compact('categories', 'user'));
     }
 
     public function show($id) {

@@ -37,7 +37,7 @@
                                 @php($item = $orderedItem->item)
                                 @php($item['quantity'] = $orderedItem['quantity'])
                                 @php($fullPrice += $item['quantity']*$item['price'])
-                                <p class="card-text mt-0 mb-0">{{ $item->name }} {{ $item->quantity }} db</p>
+                                <p class="card-text mt-0 mb-0" @if ($item->trashed()) style="color: red !important; text-decoration: line-through !important;" @endif>{{ $item->name }} {{ $item->quantity }} db</p>
                             @endforeach
 
                             <h6 class="card-subtitle mt-5">Összeg: {{ $fullPrice }} €</h6>

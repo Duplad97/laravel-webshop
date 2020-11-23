@@ -18,8 +18,9 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->double('price');
-            $table->string('image_url');
+            $table->string('image_url')->nullable();
             $table->timestamps();
+            $table->softDeletes('deleted_at', 0);
         });
     }
 
