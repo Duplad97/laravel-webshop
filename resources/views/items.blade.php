@@ -5,7 +5,20 @@
 @section('content')
     <div class="container">
 
+        @if (session()->has('category_added'))
+            @if (session()->get('category_added') == true)
+                <div class="alert alert-success mb-3" role="alert">
+                    Kategória sikeresen hozzáadva!
+                </div>
+            @endif
+        @endif
+
+
     @if($user && $user->is_admin)
+        <div class="text-center my-3">
+            <a href="{{ route('new.category') }}" role="button" class="btn btn-primary @guest disabled @endguest" >Új kategória</a>
+        </div>
+
         <div class="text-center my-3">
             <a href="" role="button" class="btn btn-primary @guest disabled @endguest" >Új termék</a>
         </div>
@@ -17,7 +30,16 @@
 
         <div class="row">
             @foreach ($categories as $category)
-                <span class="badge badge-dark m-2"><a style="color: white !important;" href="{{ route('category', ['id' => $category->id]) }}">{{ $category->name }}</a></span>
+            <div class="col">
+                <span class="badge badge-dark m-2"><a style="color: white !important; font-size: 14px !important;" href="{{ route('category', ['id' => $category->id]) }}">{{ $category->name }}</a></span>
+                @if($user && $user->is_admin)
+                <form action="{{ route('delete.category', ['id' => $category->id]) }}" method="POST">
+                @method('DELETE')
+                @csrf
+                    <button type="submit" class="btn btn-link">Törlés</button>
+                </form>
+                @endif
+            </div>
             @endforeach
         </div>
 

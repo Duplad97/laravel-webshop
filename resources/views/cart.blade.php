@@ -25,7 +25,7 @@
                             <p class="card-text">Mennyiség: {{ $item->quantity }} db</p>
                             <p class="card-text">Összesen: {{ $item->quantity*$item->price }} €</p>
                             <div class="text-center">
-                            <form action="{{ route('remove.from.cart', ['itemId' => $item->id]) }}" method="POST" class="text-center">
+                                <form action="{{ route('remove.from.cart', ['itemId' => $item->id]) }}" method="POST" class="text-center">
                             @method('DELETE')
                             @csrf
                                     <div class="text-center my-3">
