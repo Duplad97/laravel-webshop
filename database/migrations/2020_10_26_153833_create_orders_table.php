@@ -20,6 +20,8 @@ class CreateOrdersTable extends Migration
             $table->string('comment')->nullable();
             $table->enum('payment_method', ['CASH', 'CARD']);
             $table->enum('status', ['CART', 'RECEIVED', 'REJECTED', 'ACCEPTED']);
+            $table->datetime('received_on')->nullable();
+            $table->datetime('processed_on')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

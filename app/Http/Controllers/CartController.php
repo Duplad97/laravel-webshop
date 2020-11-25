@@ -130,6 +130,7 @@ class CartController extends Controller
 
                 $order->payment_method = $orderData['payment_method'];
                 $order->status = 'RECEIVED';
+                $order->received_on = date("Y-m-d");
 
                 $order->save();
             }

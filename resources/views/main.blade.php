@@ -12,6 +12,14 @@
         @endif
     @endif
 
+    @if (session()->has('unauthorized'))
+        @if (session()->get('unauthorized') == true)
+            <div class="alert alert-danger mb-3" role="alert">
+                Hozzáférés megtagadva!
+            </div>
+        @endif
+    @endif
+
         <div class="jumbotron">
             <h1 class="display-4">Üdv a Webshopban!</h1>
             <hr class="my-4">

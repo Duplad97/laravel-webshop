@@ -80,6 +80,17 @@
                                         {{ __('Rendelések') }}
                                     </a>
 
+                                    @php($user = Auth::user())
+                                    @if($user->is_admin)
+                                        <a class="dropdown-item" href="{{ route('received.orders') }}">
+                                            {{ __('Feldolgozandó rendelések') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="{{ route('processed.orders') }}">
+                                            {{ __('Feldolgozott rendelések') }}
+                                        </a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

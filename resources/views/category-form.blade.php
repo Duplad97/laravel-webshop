@@ -9,14 +9,14 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('store.category') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ !isset($category) ? route('store.category') : route('update.category', ['id' => $category->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="name">Név</label>
-                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" placeholder="Név" value="{{ old('name') }}">
+                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" placeholder="Név" value="{{ isset($category) ? trim($category->name) : old('name') }}">
                         @if ($errors->has('name'))
                             <div class="invalid-feedback">
                                 <strong>{{ $errors->first('name') }}</strong>
@@ -26,10 +26,18 @@
                 </div>
             </div>
 
-            <h6>Termékek-ek</h6>
+            <h6>Válaszd ki, mely termékek tartozzanak a kategóriába:</h6>
             @forelse ($items as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{ $item->id }}" id="item{{ $loop->iteration }}" name="items[]">
+                    <input class="form-check-input" type="checkbox" value="{{ $item->id }}" id="item{{ $loop->iteration }}" name="items[]"
+                    @if (isset($category))
+                        @foreach($categoryItems as $categoryItem)
+                            @if($categoryItem->id === $item->id)
+                                checked
+                            @endif
+                        @endforeach
+                    @endif
+                    >
                     <label class="form-check-label" for="item{{ $loop->iteration }}">
                         {{ $item->name }}
                     </label>
@@ -39,7 +47,7 @@
             @endforelse
 
             <div class="text-center my-3">
-                <button type="submit" class="btn btn-primary">Létrehozás</button>
+                <button type="submit" class="btn btn-primary">{{ isset($category) ? 'Szerkesztés' : 'Létrehozás' }}</button>
             </div>
 
         </form>

@@ -14,19 +14,25 @@ class ItemController extends Controller
     {
         $categories = Category::all();
         $user = Auth::user();
+
         return view('items', compact('categories', 'user'));
     }
 
     public function show($id) {
-        $categories = Category::all();
         $category = Category::find($id);
 
         if ($category === null) {
-            return view('category', compact('categories'));
+            return view('category');
         }
         else {
-            $items = $category->items;
-            return view('category', compact('category', 'categories', 'items'));
+            $user = Auth::user();
+            if ($user && $user->is_admin) {
+                $items = $category->items()->withTrashed()->get();
+            }
+            else {
+                $items = $category->items;
+            }
+            return view('category', compact('category', 'items', 'user'));
         }
     }
 }
